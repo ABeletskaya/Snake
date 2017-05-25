@@ -37,6 +37,7 @@
             this.TSMIExit = new System.Windows.Forms.ToolStripMenuItem();
             this.информацияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIRecord = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,8 +49,8 @@
             this.lblMenu.Name = "lblMenu";
             this.lblMenu.Size = new System.Drawing.Size(300, 200);
             this.lblMenu.TabIndex = 0;
-            this.lblMenu.Text = "Gorgeous game Snake\r\n\r\nUse the arrow keys to change direction\r\nUse the Space bar " +
-    "to pause\r\nPress Enter to begin";
+            this.lblMenu.Text = "Gorgeous game Snake\r\n\r\nPress Enter to begin\r\nUse the Space bar to pause\r\nUse the " +
+    "arrow keys to change route\r\n";
             this.lblMenu.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
             // menuStrip1
@@ -97,7 +98,8 @@
             // информацияToolStripMenuItem
             // 
             this.информацияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TSMIAbout});
+            this.TSMIAbout,
+            this.TSMIRecord});
             this.информацияToolStripMenuItem.Name = "информацияToolStripMenuItem";
             this.информацияToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
             this.информацияToolStripMenuItem.Text = "Information";
@@ -108,6 +110,13 @@
             this.TSMIAbout.Size = new System.Drawing.Size(156, 22);
             this.TSMIAbout.Text = "About program";
             this.TSMIAbout.Click += new System.EventHandler(this.TSMIAbout_Click);
+            // 
+            // TSMIRecord
+            // 
+            this.TSMIRecord.Name = "TSMIRecord";
+            this.TSMIRecord.Size = new System.Drawing.Size(156, 22);
+            this.TSMIRecord.Text = "Record";
+            this.TSMIRecord.Click += new System.EventHandler(this.TSMIRecord_Click);
             // 
             // FrmMain
             // 
@@ -141,6 +150,7 @@
         private System.Windows.Forms.ToolStripMenuItem информацияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem TSMIAbout;
         private System.Windows.Forms.ToolStripMenuItem TSMIExit;
+        private System.Windows.Forms.ToolStripMenuItem TSMIRecord;
     }
 }
 

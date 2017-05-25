@@ -14,6 +14,8 @@ namespace Snake
         private Snake snake;
         private Food food;
         private string record;
+        private int oldRecord;
+
 
         public FrmMain()
         {
@@ -22,7 +24,18 @@ namespace Snake
             food = new Food();
             gameTimer.Interval = 75;
             gameTimer.Tick += Update;
+
+            if (!File.Exists(@"../../ Record.txt"))
+            {
+                record = "0 - Play the game to note your record";
+                File.WriteAllText(@"../../ Record.txt", $"{record}");
+            }
+            else
+            {
+                record = File.ReadAllText(@"../../ Record.txt");
+            }
         }
+
 
         private void FrmMain_KeyDown(object sender, KeyEventArgs e)
         {
@@ -58,6 +71,7 @@ namespace Snake
             }
         }
 
+
         private void FrmMain_Paint(object sender, PaintEventArgs e)
         {
             graphics = this.CreateGraphics();
@@ -65,18 +79,18 @@ namespace Snake
             food.Draw(graphics);
         }
 
+
         private void Update(object sender, EventArgs e)
         {
             this.Text = string.Format($"Score: {score}");
             snake.Move(route);
 
-            // проверка на коллизию с телом
             if (BodyCollision())
                 Restart();
-            // проверка на выход за пределы поля
+
             if (BorderCollision())
                 Restart();
-            // проверка на пересечение с едой
+
             if (IntersectFood())
             {
                 score++;
@@ -86,14 +100,15 @@ namespace Snake
             this.Invalidate();
         }
 
+
         private bool BodyCollision()
         {
             for (int i = 1; i < snake.Body.Length; i++)
                 if (snake.Body[0].IntersectsWith(snake.Body[i]))
                     return true;
             return false;
-
         }
+
 
         private bool BorderCollision()
         {
@@ -102,6 +117,7 @@ namespace Snake
             return false;
         }
 
+
         private bool IntersectFood()
         {
             if (snake.Body[0].IntersectsWith(food.Canary))
@@ -109,16 +125,30 @@ namespace Snake
             return false;
         }
 
+
         private void Restart()
         {
             gameTimer.Stop();
             graphics.Clear(SystemColors.Control);
+            UpdateRecord();
             snake = new Snake();
             food = new Food();
-            route = 0;
-            score = 1;
             lblMenu.Visible = true;
+            route = 0;
+            score = 0;
         }
+
+
+        private void UpdateRecord()
+        {
+            oldRecord = int.Parse(record.Split(' ')[0]);
+            if (oldRecord < score)
+            {
+                record = $"{score} - Max record, {DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}";
+                File.WriteAllText(@"../../ Record.txt", $"{record}");
+            }
+        }
+
 
         private void TSMINewGame_Click(object sender, EventArgs e)
         {
@@ -130,21 +160,30 @@ namespace Snake
             }
         }
 
+
         private void TSMIPause_Click(object sender, EventArgs e)
         {
             if (!lblMenu.Visible)
                 gameTimer.Enabled = (gameTimer.Enabled) ? false : true;
         }
-        
+
+
         private void TSMIAbout_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(@"Amazing game snake
+            MessageBox.Show(@"Gorgeous game snake
 by Anna Beletskaya");
         }
-        
+
+
         private void TSMIExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+
+        private void TSMIRecord_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"{record}");
         }
     }
 }
