@@ -30,8 +30,8 @@ namespace Snake
 
         public void Generate()
         {           
-            x = rand.Next(20, xRandMax) * width; 
-            y = rand.Next(16, yRandMax) * height + heightMenu;
+            x = rand.Next(0, xRandMax) * width; 
+            y = rand.Next(0, yRandMax) * height + heightMenu;
         }
     }
 }
