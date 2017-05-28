@@ -23,7 +23,6 @@ namespace Snake
         {
             Body = new List<Rectangle>();
             Body.Add(new Rectangle(x, y, width, height));
-
         }
 
 
