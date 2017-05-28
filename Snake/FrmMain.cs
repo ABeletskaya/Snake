@@ -1,39 +1,22 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.IO;
 
 namespace Snake
 {
     public partial class FrmMain : Form
     {
-        private int route = 0;
-        private int score = 0;
         private Timer gameTimer = new Timer();
         private Graphics graphics;
-        private Snake snake;
-        private Food food;
-        private string record;
-        private int oldRecord;
+        private GameLogic gameLogic;
 
 
         public FrmMain()
         {
             InitializeComponent();
-            snake = new Snake();
-            food = new Food();
+            gameLogic = new GameLogic();
             gameTimer.Interval = 75;
             gameTimer.Tick += Update;
-
-            if (!File.Exists(@"../../ Record.txt"))
-            {
-                record = "0 - Play the game to note your record";
-                File.WriteAllText(@"../../ Record.txt", $"{record}");
-            }
-            else
-            {
-                record = File.ReadAllText(@"../../ Record.txt");
-            }
         }
 
 
@@ -50,23 +33,19 @@ namespace Snake
                     break;
                 case Keys.Space:
                     if (!lblMenu.Visible)
-                        gameTimer.Enabled = (gameTimer.Enabled) ? false : true;
+                        gameTimer.Enabled = !gameTimer.Enabled;
                     break;
                 case Keys.Right:
-                    if (route != 2)
-                        route = 0;
+                    gameLogic.ChangeRoute(0);
                     break;
                 case Keys.Down:
-                    if (route != 3)
-                        route = 1;
+                    gameLogic.ChangeRoute(1);
                     break;
                 case Keys.Left:
-                    if (route != 0)
-                        route = 2;
+                    gameLogic.ChangeRoute(2);
                     break;
                 case Keys.Up:
-                    if (route != 1)
-                        route = 3;
+                    gameLogic.ChangeRoute(3);
                     break;
             }
         }
@@ -75,54 +54,18 @@ namespace Snake
         private void FrmMain_Paint(object sender, PaintEventArgs e)
         {
             graphics = this.CreateGraphics();
-            snake.Draw(graphics);
-            food.Draw(graphics);
+            gameLogic.Draw(graphics);
         }
 
 
         private void Update(object sender, EventArgs e)
         {
-            this.Text = string.Format($"Score: {score}");
-            snake.Move(route);
+            this.Text = string.Format($"Score: {gameLogic.score}");
 
-            if (BodyCollision())
+            if (gameLogic.GameActionsAndRestart())
                 Restart();
 
-            if (BorderCollision())
-                Restart();
-
-            if (IntersectFood())
-            {
-                score++;
-                snake.Grow();
-                food.Generate();
-            }
             this.Invalidate();
-        }
-
-
-        private bool BodyCollision()
-        {
-            for (int i = 1; i < snake.Body.Length; i++)
-                if (snake.Body[0].IntersectsWith(snake.Body[i]))
-                    return true;
-            return false;
-        }
-
-
-        private bool BorderCollision()
-        {
-            if ((snake.Body[0].X < 0 || snake.Body[0].X > 290) || (snake.Body[0].Y < 24 || snake.Body[0].Y > 216))
-                return true;
-            return false;
-        }
-
-
-        private bool IntersectFood()
-        {
-            if (snake.Body[0].IntersectsWith(food.Canary))
-                return true;
-            return false;
         }
 
 
@@ -130,23 +73,8 @@ namespace Snake
         {
             gameTimer.Stop();
             graphics.Clear(SystemColors.Control);
-            UpdateRecord();
-            snake = new Snake();
-            food = new Food();
             lblMenu.Visible = true;
-            route = 0;
-            score = 0;
-        }
-
-
-        private void UpdateRecord()
-        {
-            oldRecord = int.Parse(record.Split(' ')[0]);
-            if (oldRecord < score)
-            {
-                record = $"{score} - Max record, {DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}";
-                File.WriteAllText(@"../../ Record.txt", $"{record}");
-            }
+            gameLogic.Restart();
         }
 
 
@@ -164,7 +92,7 @@ namespace Snake
         private void TSMIPause_Click(object sender, EventArgs e)
         {
             if (!lblMenu.Visible)
-                gameTimer.Enabled = (gameTimer.Enabled) ? false : true;
+                gameTimer.Enabled = !gameTimer.Enabled;
         }
 
 
@@ -183,7 +111,7 @@ by Anna Beletskaya");
 
         private void TSMIRecord_Click(object sender, EventArgs e)
         {
-            MessageBox.Show($"{record}");
+            MessageBox.Show(gameLogic.message);
         }
     }
 }

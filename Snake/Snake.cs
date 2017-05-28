@@ -1,57 +1,86 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Drawing;
 
 namespace Snake
 {
     class Snake
     {
-        public Rectangle[] Body;
-        private int x = 0, y = 25, width = 10, height = 10;
-     
-        public Snake()
+        public List<Rectangle> Body;
+        public int x = 0, y = 25, width = 10, height = 10;
+        private const int xMin = 0, yMin = 0, xMax = 290, yMax = 200, heightMenu = 24;
+        private Rectangle Head
         {
-            Body = new Rectangle[1];
-            Body[0] = new Rectangle(x, y, width, height);
+            get
+            {
+                Head = new Rectangle(this.Body[0].X, this.Body[0].Y, this.Body[0].Width, this.Body[0].Height);
+                return Head;
+            }
+            set { this.Body[0] = value; }
         }
 
-        public void Draw()
+
+        public Snake()
         {
-            for (int i = Body.Length - 1; i > 0; i--)
-                Body[i] = Body[i - 1]; 
+            Body = new List<Rectangle>();
+            Body.Add(new Rectangle(x, y, width, height));
+
         }
+
+
+        public void MoveBody()
+        {
+            for (int i = Body.Count - 1; i > 0; i--)
+                Body[i] = Body[i - 1];
+        }
+
 
         public void Draw(Graphics graphics)
         {
-            graphics.FillRectangles(Brushes.Gray, Body);
+            graphics.FillRectangles(Brushes.Gray, Body.ToArray());
         }
+
 
         public void Move(int direction) // 0 = Право, 1 = Низ, 2 = Лево, 3 = Вверх
         {
-            Draw();
+            MoveBody();
             switch (direction)
             {
                 case 0:
-                    Body[0].X += 10; 
+                    Head = new Rectangle(Body[0].X + 10, Body[0].Y, width, height);
                     break;
                 case 1:
-                    Body[0].Y += 10;
+                    Head = new Rectangle(Body[0].X, Body[0].Y + 10, width, height);
                     break;
                 case 2:
-                    Body[0].X -= 10;
+                    Head = new Rectangle(Body[0].X - 10, Body[0].Y, width, height);
                     break;
                 case 3:
-                    Body[0].Y -= 10;
+                    Head = new Rectangle(Body[0].X, Body[0].Y - 10, width, height);
                     break;
             }
         }
 
+
         public void Grow()
         {
-            List<Rectangle> temp = Body.ToList();
-            temp.Add(new Rectangle(Body[Body.Length - 1].X, Body[Body.Length - 1].Y, width, height));
-            Body = temp.ToArray();
+            Body.Add(new Rectangle(Body[Body.Count - 1].X, Body[Body.Count - 1].Y, width, height));
+        }
+
+
+        public bool BodyCollision()
+        {
+            for (int i = 1; i < Body.Count; i++)
+                if (Body[0].IntersectsWith(Body[i]))
+                    return true;
+            return false;
+        }
+
+
+        public bool BorderCollision()
+        {
+            if ((Body[0].X < xMin || Body[0].X > xMax) || (Body[0].Y < yMin + heightMenu || Body[0].Y > yMax + heightMenu))
+                return true;
+            return false;
         }
     }
 }

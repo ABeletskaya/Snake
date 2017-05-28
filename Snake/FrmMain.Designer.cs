@@ -31,11 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.lblMenu = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.управлениеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIControl = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMINewGame = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIPause = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.информацияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMIInformation = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMIRecord = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
@@ -56,23 +56,23 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.управлениеToolStripMenuItem,
-            this.информацияToolStripMenuItem});
+            this.TSMIControl,
+            this.TSMIInformation});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(300, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // управлениеToolStripMenuItem
+            // TSMIControl
             // 
-            this.управлениеToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSMIControl.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMINewGame,
             this.TSMIPause,
             this.TSMIExit});
-            this.управлениеToolStripMenuItem.Name = "управлениеToolStripMenuItem";
-            this.управлениеToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
-            this.управлениеToolStripMenuItem.Text = "Control";
+            this.TSMIControl.Name = "TSMIControl";
+            this.TSMIControl.Size = new System.Drawing.Size(59, 20);
+            this.TSMIControl.Text = "Control";
             // 
             // TSMINewGame
             // 
@@ -95,14 +95,14 @@
             this.TSMIExit.Text = "Exit";
             this.TSMIExit.Click += new System.EventHandler(this.TSMIExit_Click);
             // 
-            // информацияToolStripMenuItem
+            // TSMIInformation
             // 
-            this.информацияToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSMIInformation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMIAbout,
             this.TSMIRecord});
-            this.информацияToolStripMenuItem.Name = "информацияToolStripMenuItem";
-            this.информацияToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
-            this.информацияToolStripMenuItem.Text = "Information";
+            this.TSMIInformation.Name = "TSMIInformation";
+            this.TSMIInformation.Size = new System.Drawing.Size(82, 20);
+            this.TSMIInformation.Text = "Information";
             // 
             // TSMIAbout
             // 
@@ -144,10 +144,10 @@
 
         private System.Windows.Forms.Label lblMenu;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem управлениеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TSMIControl;
         private System.Windows.Forms.ToolStripMenuItem TSMINewGame;
         private System.Windows.Forms.ToolStripMenuItem TSMIPause;
-        private System.Windows.Forms.ToolStripMenuItem информацияToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TSMIInformation;
         private System.Windows.Forms.ToolStripMenuItem TSMIAbout;
         private System.Windows.Forms.ToolStripMenuItem TSMIExit;
         private System.Windows.Forms.ToolStripMenuItem TSMIRecord;
