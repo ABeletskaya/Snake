@@ -7,13 +7,14 @@ namespace Snake
     {
         public void ExistRecordFile(out string message)
         {
-            if (!File.Exists(@"../../ Record.txt"))
+            string source = @"../../ Record.txt";
+            if (!File.Exists(source))
             {
                 message = "0 - Play the game to note your record";
-                File.WriteAllText(@"../../ Record.txt", message);
+                File.WriteAllText(source, message);
             }
             else
-                message = File.ReadAllText(@"../../ Record.txt");
+                message = File.ReadAllText(source);
         }
 
         public void UpdateRecord(ref string message, int score)
