@@ -6,14 +6,7 @@ namespace Snake
     class Snake
     {
         public List<Rectangle> Body;
-        public int X { get; set; }
-        public int Y {
-            get
-            {
-                return 25;
-            }
-          }
-          
+        private int x = 0, y = 25;          
         private const int width = 10, height = 10, xMin = 0, yMin = 0, xMax = 290, yMax = 200, heightMenu = 24;
         private Rectangle Head
         {
@@ -28,7 +21,7 @@ namespace Snake
         public Snake()
         {
             Body = new List<Rectangle>();
-            Body.Add(new Rectangle(X, Y, width, height));
+            Body.Add(new Rectangle(x, y, width, height));
         }
 
 
